@@ -1,26 +1,13 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import firebase from 'firebase';
 
 import MemoList from '../components/MemoList';
 import CircleButton from '../elements/CircleButton';
 
-// this.props.navigation.navigate('MemoEdit');
 class MemoListScreen extends React.Component {
-  // eslint-disable-next-line
   handlePress() {
-    const { params }= this.props.navigation.state;
-    const db = firebase.firestore();
-    db.collection(`users/${params.currentUser.uid}/memos`).add({
-      body: 'Hello',
-      createdOn: '2017-01-01',
-    })
-      .then((docRef) => {
-        console.log(docRef.id);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const { params } = this.props.navigation.state;
+    this.props.navigation.navigate('MemoCreate', { currentUser: params.currentUser });
   }
 
   render() {
