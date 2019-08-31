@@ -1,8 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, Text, TextInput } from 'react-native';
-
+import { StyleSheet, View, Text, TextInput, InputAccessoryView, Keyboard, Button } from 'react-native';
 import firebase from 'firebase';
-
 import CircleButton from '../elements/CircleButton';
 
 class MemoEditScreen extends React.Component {
@@ -44,20 +42,28 @@ class MemoEditScreen extends React.Component {
   }
 
   render() {
+    const inputAccessoryViewID = "uniqueID";
     return (
       <View style={styles.container}>
         <TextInput
           style={styles.memoEditInput}
           multiline
           value={this.state.body}
+          inputAccessoryViewID={inputAccessoryViewID}
           onChangeText={(text) => { this.setState({ body: text }); }}
-          />
+        />
         <CircleButton name="check" onPress={this.handlePress.bind(this)}/>
+        <InputAccessoryView nativeID={inputAccessoryViewID}>
+        <Button
+          onPress={() => Keyboard.dismiss()}
+          title="完了"
+          style={styles.memoEditButton}
+        />
+        </InputAccessoryView>
       </View>
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -72,6 +78,9 @@ const styles = StyleSheet.create({
     paddingRight: 16,
     paddingBottom: 16,
     fontSize: 16,
+  },
+  memoEditButton: {
+    alignItems: 'flex-end',
   },
 });
 
